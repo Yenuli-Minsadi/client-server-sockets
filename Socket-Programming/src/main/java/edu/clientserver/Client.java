@@ -1,5 +1,6 @@
 package edu.clientserver;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -17,6 +18,10 @@ public class Client {
             System.out.print("Input message: ");
             String input = scanner.next();
             dataOutputStream.writeUTF(input);
+
+            DataInputStream dataInputStream = new DataInputStream(remoteSocket.getInputStream());//get and read received data stream
+            String message = dataInputStream.readUTF();//convert data to readable string
+            System.out.println("Client: "+message);
 
             dataOutputStream.flush();
             remoteSocket.close();
