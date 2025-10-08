@@ -21,7 +21,7 @@ public class Client {
 
             DataInputStream dataInputStream = new DataInputStream(remoteSocket.getInputStream());//get and read received data stream
             String message = dataInputStream.readUTF();//convert data to readable string
-            System.out.println("Client: "+message);
+            System.out.println("Server: "+message);
 
             dataOutputStream.flush();
             remoteSocket.close();
