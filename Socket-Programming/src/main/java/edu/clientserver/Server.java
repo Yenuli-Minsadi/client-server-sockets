@@ -17,7 +17,7 @@ public class Server {
             DataInputStream dataInputStream = new DataInputStream(localSocket.getInputStream());//get and read received data stream
             String message = dataInputStream.readUTF();//convert data to readable string
             System.out.println("Client: "+message);
-            
+
             localSocket.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
