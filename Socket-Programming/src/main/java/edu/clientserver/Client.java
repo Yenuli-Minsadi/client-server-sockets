@@ -15,14 +15,15 @@ public class Client {
 
             try {
                     Socket remoteSocket = new Socket("localhost", 3000);
+                    DataOutputStream dataOutputStream = new DataOutputStream(remoteSocket.getOutputStream());
+                DataInputStream dataInputStream = new DataInputStream(remoteSocket.getInputStream());//get and read received data stream
                 boolean flag = true;
                 while (flag) {
-                    DataOutputStream dataOutputStream = new DataOutputStream(remoteSocket.getOutputStream());
+
                     System.out.print("Input message: ");
                     String input = scanner.next();
                     dataOutputStream.writeUTF(input);
 
-                    DataInputStream dataInputStream = new DataInputStream(remoteSocket.getInputStream());//get and read received data stream
                     String message = dataInputStream.readUTF();//convert data to readable string
                     System.out.println("Server: " + message);
 

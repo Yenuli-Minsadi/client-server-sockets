@@ -17,14 +17,14 @@ public class Server {
 
                 Socket localSocket = serverSocket.accept();//accepted request has been assigned to local socket after creating local socket
                 System.out.println("client accepted");
-
+                DataInputStream dataInputStream = new DataInputStream(localSocket.getInputStream());//get and read received data stream
+                DataOutputStream dataOutputStream = new DataOutputStream(localSocket.getOutputStream());
                 boolean flag = true;
                 while (flag) {
-                    DataInputStream dataInputStream = new DataInputStream(localSocket.getInputStream());//get and read received data stream
+
                     String message = dataInputStream.readUTF();//convert data to readable string
                     System.out.println("Client: " + message);
 
-                    DataOutputStream dataOutputStream = new DataOutputStream(localSocket.getOutputStream());
                     System.out.print("Input message: ");
                     String input = scanner.next();
                     dataOutputStream.writeUTF(input);
