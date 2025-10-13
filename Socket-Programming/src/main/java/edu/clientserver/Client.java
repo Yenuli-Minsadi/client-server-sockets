@@ -33,7 +33,7 @@ public class Client {
                             System.exit(0);
                         }
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        System.exit(0);
                     }
                 }
                 });
@@ -49,7 +49,8 @@ public class Client {
                                 System.exit(0);
                             }
                         } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            System.exit(0);
+
                         }
                         System.out.println("Server: " + message);
                     }
