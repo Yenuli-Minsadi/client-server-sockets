@@ -19,20 +19,47 @@ public class Server {
                 System.out.println("client accepted");
                 DataInputStream dataInputStream = new DataInputStream(localSocket.getInputStream());//get and read received data stream
                 DataOutputStream dataOutputStream = new DataOutputStream(localSocket.getOutputStream());
+
+                Thread readThread = new Thread(()->{
+
                 boolean flag = true;
                 while (flag) {
 
-                    String message = dataInputStream.readUTF();//convert data to readable string
+                    String message = null;//convert data to readable string
+                    try {
+                        message = dataInputStream.readUTF();
+                        if (message.equalsIgnoreCase("exit")) {
+                            localSocket.close();
+                            System.exit(0);
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     System.out.println("Client: " + message);
-
-                    System.out.print("Input message: ");
-                    String input = scanner.next();
-                    dataOutputStream.writeUTF(input);
-
-                    dataOutputStream.flush();
                 }
-                    localSocket.close();
+                });
 
+                Thread writeThread = new Thread(()->{
+                    boolean flag = true;
+                    while (flag) {
+                        System.out.print("Input message: ");
+                        String input = scanner.next();
+                        try {
+                            dataOutputStream.writeUTF(input);
+                            dataOutputStream.flush();
+
+                            if (input.equalsIgnoreCase("exit")) {
+                                localSocket.close();
+                                System.exit(0);
+                            }
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
+
+                    readThread.start();
+                    writeThread.start();
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
